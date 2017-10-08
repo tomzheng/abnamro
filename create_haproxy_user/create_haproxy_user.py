@@ -29,6 +29,14 @@ def get_keyfilefromhostname(hostname, use, client):
 	APP = app
 	return keyserialfile
 		
+def get_keyserial_from_output(outputlist):
+	matching = filter(lambda element: 'serial' in element, outputlist)
+	serial = ''.join(matching).replace('serial=','')
+	###delete last two special character###
+	serial = serial[:-2]  
+	logging.info('serial: '+serial)
+	return serial 
+
 
 def get_keyserial(keyfile):
         global KEYDIRECTORY
@@ -48,8 +56,8 @@ def get_keyserial(keyfile):
         stdin, stdout, stderr = s.exec_command(command, get_pty = True)
 	stdin.write(password + "\n")
 	stdin.flush()
-        keyserial = stdout.readlines()
-        logging.debug('keyserial: '+''.join(keyserial))
+        output = stdout.readlines()
+	keyserial = get_keyserial_from_output(output)
         s.close()
         return keyserial
 

@@ -28,7 +28,7 @@ class ContentManager:
 """ %(self.app,self.usage,self.client,self.keyserial,self.app,self.usage,self.client,self.app,self.usage,self.client)
  	
   def Get_haproxy_backend(self):
-    self.bart_cfg_content = """
+    self.haproxy_cfg_backend = """
 
 #---------------------------------------------------------------------
 # %s%s_%s
@@ -45,9 +45,10 @@ backend %s%s_%s
   def Update_Content(self):
     templatemanager = TemplateManager()
     templatefilepath = "/templates/haproxy.cfg."+self.hostname+".erb"
-    ignorekey = self.app+self.usage+'_'+self.client
-    templatemanager.insert_file_if_notfound(cookbookpath + templatefilepath,ignorekey ,self.haproxy_cfg_frontend,"#frontend setting, edited by haproxy script on sgvlapaacchefs")
-    templatemanager.append_file_if_notfound(cookbookpath + templatefilepath,ignorekey, self.haproxy_cfg_backend)
+    ignorekey_frontend = 'cert_'+self.app+self.usage+'_'+self.client
+    ignorekey_backend = 'server  '+self.app+self.usage+'_'+self.client
+    templatemanager.insert_file_if_notfound(cookbookpath + templatefilepath,ignorekey_frontend ,self.haproxy_cfg_frontend,"#frontend setting, edited by haproxy script on sgvlapaacchefs")
+    templatemanager.append_file_if_notfound(cookbookpath + templatefilepath,ignorekey_backend, self.haproxy_cfg_backend)
 
 		
 		
