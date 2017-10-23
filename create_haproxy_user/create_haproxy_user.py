@@ -7,7 +7,6 @@ KEYHOST = ''
 KEYDIRECTORY = ''
 APP = ''
 
-logging.basicConfig(stream=sys.stderr, level=logging.INFO)
 
 def printf(format, *args):
     sys.stdout.write(format % args)
